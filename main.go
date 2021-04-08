@@ -30,14 +30,15 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/AlexsJones/KubeOps/lib/runtime"
-	"github.com/AlexsJones/KubeOps/lib/subscription"
-	"github.com/AlexsJones/KubeOps/lib/watcher"
-	"github.com/AlexsJones/KubeOps/subscriptions"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/klog"
+
+	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/runtime"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/subscription"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/watcher"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/subscriptions"
 )
 
 var (

@@ -33,4 +33,4 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: |
-            ghcr.io/AlexsJones/operator:latest
+            ghcr.io/alexsjones/operator:latest

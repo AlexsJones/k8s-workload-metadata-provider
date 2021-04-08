@@ -38,6 +38,7 @@ import (
 	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/runtime"
 	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/subscription"
 	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/watcher"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/subscriptions"
 )
 
 var (
@@ -98,10 +99,10 @@ func main() {
 	err = runtime.EventBuffer(ctx, kubeClient,
 		&subscription.Registry{
 			Subscriptions: []subscription.ISubscription{
-
+				subscriptions.ExamplePodOperator{},
 			},
 		}, []watcher.IObject{
-
+			kubeClient.CoreV1().Pods(""),
 		})
 	if err != nil {
 		klog.Error(err)

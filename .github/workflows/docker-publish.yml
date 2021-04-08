@@ -33,4 +33,4 @@ jobs:
           context: .
           push: true
           tags: |
-            $GITHUB_ENV
+            ghcr.io/$GITHUB_ENV

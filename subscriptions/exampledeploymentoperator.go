@@ -1,7 +1,7 @@
 package subscriptions
 
 import (
-	"github.com/AlexsJones/KubeOps/lib/subscription"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/subscription"
 	v1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/klog"

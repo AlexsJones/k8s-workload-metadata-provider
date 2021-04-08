@@ -1,11 +1,11 @@
 package watcher
 
 import (
+	"context"
 	"errors"
 	"k8s.io/apimachinery/pkg/watch"
-	"context"
-
 )
+
 
 // ConditionFunc returns true if the condition has been reached, false if it has not been reached yet,
 // or an error if the condition cannot be checked and should terminate. In general, it is better to define

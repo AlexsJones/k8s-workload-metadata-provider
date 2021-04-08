@@ -29,5 +29,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ github.event.repository.name }}/operator:latest
-            ghcr.io/user/app:1.0.0
+            ${{ github.repository_owner }}/${{ github.event.repository.name }}/operator:latest

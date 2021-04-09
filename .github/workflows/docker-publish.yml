@@ -43,4 +43,5 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: |
+           ghcr.io/${{ steps.repolower.outputs.lowercase }}:latest
             ghcr.io/${{ steps.userlower.outputs.lowercase }}/${{ steps.repolower.outputs.lowercase }}:latest

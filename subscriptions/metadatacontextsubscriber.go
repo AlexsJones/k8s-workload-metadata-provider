@@ -21,8 +21,8 @@ func (MetaDataContextSubscriber) WithEventType() []watch.EventType {
 
 func (MetaDataContextSubscriber) OnEvent(msg subscription.Message) {
 
-	kind := msg.Event.Object.GetObjectKind()
+	context := msg.Event.Object.(*v1.MetaDataContextType)
 
-	klog.Infof("Found a new %s", kind.GroupVersionKind().Kind)
+	klog.Infof("Found MetaDataContextType with message: %s", context.Spec.Message)
 
 }

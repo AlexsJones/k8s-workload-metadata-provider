@@ -1,6 +1,6 @@
 // +k8s:deepcopy-gen=package
 // +k8s:defaulter-gen=TypeMeta
-// +groupName=metadata
+// +groupName=metadata.cloudskunkworks
 
-package alphav1
+package v1
 

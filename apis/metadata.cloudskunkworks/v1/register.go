@@ -1,4 +1,4 @@
-package alphav1
+package v1
 
 
 import (
@@ -9,7 +9,7 @@ import (
 
 // Define your schema name and the version
 var SchemeGroupVersion = schema.GroupVersion{
-	Group:   "metadata",
+	Group:   "metadata.cloudskunkworks",
 	Version: "v1",
 }
 

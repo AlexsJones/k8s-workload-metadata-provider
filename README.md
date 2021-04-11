@@ -4,6 +4,9 @@
 
 Built from [KubeOps](https://github.com/AlexsJones/KubeOps)
 
+### Install the Custom Resource Definition on the cluster...
+
+`kubectl apply -f apis/crd.yml`
 
 ### How it works
 
@@ -19,3 +22,6 @@ Built from [KubeOps](https://github.com/AlexsJones/KubeOps)
 		})
 ```
 
+#### Testing
+
+You can then create an example of this CRD with `kubectl apply -f apis/example-resource.yaml`

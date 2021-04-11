@@ -1,0 +1,6 @@
+apiVersion: "metadata.cloudskunkworks/v1"
+kind: MetaDataContextType
+metadata:
+  name: mycontextexample
+spec:
+  message: "Test"

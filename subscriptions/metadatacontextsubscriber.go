@@ -1,7 +1,7 @@
 package subscriptions
 
 import (
-	"github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata/alphav1"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata.cloudskunkworks/v1"
 	"github.com/AlexsJones/k8s-workload-metadata-provider/lib/subscription"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/klog"
@@ -11,7 +11,7 @@ type MetaDataContextSubscriber struct{}
 
 func (MetaDataContextSubscriber) WithElectedResource() interface{} {
 
-	return &alphav1.MetaDataContextType{}
+	return &v1.MetaDataContextType{}
 }
 
 func (MetaDataContextSubscriber) WithEventType() []watch.EventType {

@@ -1,4 +1,4 @@
-package alphav1
+package v1
 
 import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
@@ -9,7 +9,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 type MetaDataContextType struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
-	metav1.ObjectMeta `json:"metadata,omitempty"`
+	metav1.ObjectMeta `json:"metadata.cloudskunkworks,omitempty"`
 
 	// +optional
 	Status MetaDataContextTypeStatus `json:"status,omitempty"`
@@ -21,7 +21,6 @@ type MetaDataContextType struct {
 // custom spec
 type MetaDataContextSpec struct {
 	Message string `json:"message,omitempty"`
-	DataMappingExample map[string]string`json:"datamapping,omitempty"`
 }
 
 // custom status
@@ -35,7 +34,7 @@ type MetaDataContextTypeStatus struct {
 type MetaDataContextTypeList struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
-	metav1.ListMeta `son:"metadata,omitempty"`
+	metav1.ListMeta `son:"metadata.cloudskunkworks,omitempty"`
 
 	Items []MetaDataContextType `json:"items"`
 }

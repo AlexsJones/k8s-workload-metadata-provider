@@ -19,7 +19,7 @@ limitations under the License.
 package fake
 
 import (
-	metadataalphav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata/alphav1"
+	metadatav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata.cloudskunkworks/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -31,7 +31,7 @@ var scheme = runtime.NewScheme()
 var codecs = serializer.NewCodecFactory(scheme)
 
 var localSchemeBuilder = runtime.SchemeBuilder{
-	metadataalphav1.AddToScheme,
+	metadatav1.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition

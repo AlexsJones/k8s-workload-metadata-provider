@@ -21,7 +21,7 @@ package versioned
 import (
 	"fmt"
 
-	metadataalphav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata/alphav1"
+	metadatav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -29,19 +29,19 @@ import (
 
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
-	MetadataAlphav1() metadataalphav1.MetadataAlphav1Interface
+	MetadataV1() metadatav1.MetadataV1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
 // version included in a Clientset.
 type Clientset struct {
 	*discovery.DiscoveryClient
-	metadataAlphav1 *metadataalphav1.MetadataAlphav1Client
+	metadataV1 *metadatav1.MetadataV1Client
 }
 
-// MetadataAlphav1 retrieves the MetadataAlphav1Client
-func (c *Clientset) MetadataAlphav1() metadataalphav1.MetadataAlphav1Interface {
-	return c.metadataAlphav1
+// MetadataV1 retrieves the MetadataV1Client
+func (c *Clientset) MetadataV1() metadatav1.MetadataV1Interface {
+	return c.metadataV1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -65,7 +65,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	}
 	var cs Clientset
 	var err error
-	cs.metadataAlphav1, err = metadataalphav1.NewForConfig(&configShallowCopy)
+	cs.metadataV1, err = metadatav1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 // panics if there is an error in the config.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
-	cs.metadataAlphav1 = metadataalphav1.NewForConfigOrDie(c)
+	cs.metadataV1 = metadatav1.NewForConfigOrDie(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClientForConfigOrDie(c)
 	return &cs
@@ -90,7 +90,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 // New creates a new Clientset for the given RESTClient.
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
-	cs.metadataAlphav1 = metadataalphav1.New(c)
+	cs.metadataV1 = metadatav1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

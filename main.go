@@ -24,7 +24,7 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata/alphav1"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1"
 	"log"
 	"net/http"
 	"os"
@@ -76,7 +76,7 @@ func main() {
 	}
 
 	// Metadata clientset
-	metaDataClient, err := alphav1.NewForConfig(cfg)
+	metaDataClient, err := v1.NewForConfig(cfg)
 	if err != nil {
 		klog.Fatalf("Error building example clientset: %s", err.Error())
 	}

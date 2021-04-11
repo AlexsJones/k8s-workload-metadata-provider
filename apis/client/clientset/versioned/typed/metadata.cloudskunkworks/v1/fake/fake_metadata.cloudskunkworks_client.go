@@ -19,22 +19,22 @@ limitations under the License.
 package fake
 
 import (
-	alphav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata/alphav1"
+	v1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeMetadataAlphav1 struct {
+type FakeMetadataV1 struct {
 	*testing.Fake
 }
 
-func (c *FakeMetadataAlphav1) MetaDataContextTypes(namespace string) alphav1.MetaDataContextTypeInterface {
+func (c *FakeMetadataV1) MetaDataContextTypes(namespace string) v1.MetaDataContextTypeInterface {
 	return &FakeMetaDataContextTypes{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeMetadataAlphav1) RESTClient() rest.Interface {
+func (c *FakeMetadataV1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

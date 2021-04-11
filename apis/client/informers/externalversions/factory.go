@@ -25,7 +25,7 @@ import (
 
 	versioned "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned"
 	internalinterfaces "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/informers/externalversions/internalinterfaces"
-	metadata "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/informers/externalversions/metadata"
+	metadatacloudskunkworks "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/informers/externalversions/metadata.cloudskunkworks"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -172,9 +172,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Metadata() metadata.Interface
+	Metadata() metadatacloudskunkworks.Interface
 }
 
-func (f *sharedInformerFactory) Metadata() metadata.Interface {
-	return metadata.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Metadata() metadatacloudskunkworks.Interface {
+	return metadatacloudskunkworks.New(f, f.namespace, f.tweakListOptions)
 }

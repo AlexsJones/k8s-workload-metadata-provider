@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned"
-	metadataalphav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata/alphav1"
-	fakemetadataalphav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata/alphav1/fake"
+	metadatav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1"
+	fakemetadatav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -76,7 +76,7 @@ func (c *Clientset) Tracker() testing.ObjectTracker {
 
 var _ clientset.Interface = &Clientset{}
 
-// MetadataAlphav1 retrieves the MetadataAlphav1Client
-func (c *Clientset) MetadataAlphav1() metadataalphav1.MetadataAlphav1Interface {
-	return &fakemetadataalphav1.FakeMetadataAlphav1{Fake: &c.Fake}
+// MetadataV1 retrieves the MetadataV1Client
+func (c *Clientset) MetadataV1() metadatav1.MetadataV1Interface {
+	return &fakemetadatav1.FakeMetadataV1{Fake: &c.Fake}
 }

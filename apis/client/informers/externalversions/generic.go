@@ -21,7 +21,7 @@ package externalversions
 import (
 	"fmt"
 
-	alphav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata/alphav1"
+	v1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata.cloudskunkworks/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -52,9 +52,9 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=metadata, Version=alphav1
-	case alphav1.SchemeGroupVersion.WithResource("metadatacontexttypes"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Metadata().Alphav1().MetaDataContextTypes().Informer()}, nil
+	// Group=metadata.cloudskunkworks, Version=v1
+	case v1.SchemeGroupVersion.WithResource("metadatacontexttypes"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Metadata().V1().MetaDataContextTypes().Informer()}, nil
 
 	}
 

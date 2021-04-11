@@ -33,3 +33,5 @@ delete:
 list:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
+generate-crd:
+	$(GOPATH)/src/k8s.io/code-generator/generate-groups.sh all github.com/AlexsJones/k8s-workload-metadata-provider/apis/client github.com/AlexsJones/k8s-workload-metadata-provider/apis metadata:alphav1 -v10

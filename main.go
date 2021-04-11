@@ -24,6 +24,7 @@ package main
 import (
 	"context"
 	"flag"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata/alphav1"
 	"log"
 	"net/http"
 	"os"
@@ -74,6 +75,12 @@ func main() {
 		klog.Fatalf("Error building watcher clientset: %s", err.Error())
 	}
 
+	// Metadata clientset
+	metaDataClient, err := alphav1.NewForConfig(cfg)
+	if err != nil {
+		klog.Fatalf("Error building example clientset: %s", err.Error())
+	}
+
 	klog.Info("Created new KubeConfig")
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -103,6 +110,7 @@ func main() {
 			},
 		}, []watcher.IObject{
 			kubeClient.CoreV1().Pods(""),
+			metaDataClient.MetaDataContextTypes(""), //Watch for our CRD
 		})
 	if err != nil {
 		klog.Error(err)

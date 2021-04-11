@@ -106,7 +106,7 @@ func main() {
 	err = runtime.EventBuffer(ctx, kubeClient,
 		&subscription.Registry{
 			Subscriptions: []subscription.ISubscription{
-				subscriptions.ExamplePodOperator{},
+				subscriptions.MetaDataContextSubscriber{},
 			},
 		}, []watcher.IObject{
 			kubeClient.CoreV1().Pods(""),

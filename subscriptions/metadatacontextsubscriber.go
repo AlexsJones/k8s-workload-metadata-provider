@@ -26,7 +26,7 @@ func (m MetaDataContextSubscriber) OnEvent(msg subscription.Message) {
 
 	context := msg.Event.Object.(*v1.MetaDataContextType)
 
-	klog.Infof("Found MetaDataContextType with data")
+	klog.V(7).Infof("MetaDataContextType %s",context.Name)
 
 	for k, v := range context.Spec.DataMapping {
 		klog.Infof("Key %s: Value: %v", k,v)

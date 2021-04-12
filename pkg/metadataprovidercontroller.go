@@ -23,6 +23,10 @@ func (*MetaDataProviderController) OnPodEvent(event watch.EventType, pod *v1.Pod
 func (m *MetaDataProviderController) OnMetaDataContextTypeEvent(event watch.Event,
 	context *metadatav1.MetaDataContextType) {
 
+	if context.Name == "" {
+		klog.Errorf("Unable to retrieve name from incoming event")
+		return
+	}
 	switch event.Type {
 	case watch.Added:
 		m.TempMetaDataReferenceStorage.Set(context.Name,context)

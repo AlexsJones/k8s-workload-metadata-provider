@@ -5,6 +5,7 @@ import (
 	"github.com/AlexsJones/k8s-workload-metadata-provider/pkg"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/watch"
+	"k8s.io/klog"
 )
 
 type PodSubscriber struct{
@@ -23,5 +24,8 @@ func (PodSubscriber) WithEventType() []watch.EventType {
 
 func (PodSubscriber) OnEvent(msg subscription.Message) {
 
+	pod := msg.Event.Object.(*v1.Pod)
+
+	klog.V(7).Infof("Pod %s",pod.Name)
 
 }

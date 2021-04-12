@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/AlexsJones/KubeOps v0.0.0-20210407143708-1f4fbe87f2be
+	github.com/orcaman/concurrent-map v0.0.0-20210106121528-16402b402231
 	github.com/prometheus/client_golang v1.8.0
 	github.com/sirupsen/logrus v1.6.0
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect

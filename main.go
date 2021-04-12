@@ -25,6 +25,7 @@ import (
 	"context"
 	"flag"
 	"github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1"
+	"github.com/AlexsJones/k8s-workload-metadata-provider/pkg"
 	"log"
 	"net/http"
 	"os"
@@ -99,6 +100,11 @@ func main() {
 	}()
 
 	klog.Info("Starting event buffer...")
+
+
+	// Inject the MetaDataProviderController into the subscriptions
+	metadataProvider := pkg.MetaDataProviderController{ KubeClient: kubeClient}
+	go metadataProvider.ControlLoop(ctx)
 	/*
 		This is a default template file.
 		Add subscriptions and watchers to make it your own.
@@ -106,7 +112,8 @@ func main() {
 	err = runtime.EventBuffer(ctx, kubeClient,
 		&subscription.Registry{
 			Subscriptions: []subscription.ISubscription{
-				subscriptions.MetaDataContextSubscriber{},
+				subscriptions.MetaDataContextSubscriber{ MetaDataProvider: metadataProvider  },
+				subscriptions.PodSubscriber{ MetaDataProvider: metadataProvider },
 			},
 		}, []watcher.IObject{
 			kubeClient.CoreV1().Pods(""),

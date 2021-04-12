@@ -35,15 +35,26 @@ Built from [KubeOps](https://github.com/AlexsJones/KubeOps)
 ### How it works
 
 ```go
-	err = runtime.EventBuffer(ctx, kubeClient,
-		&subscription.Registry{
-			Subscriptions: []subscription.ISubscription{
-				subscriptions.MetaDataContextSubscriber{},
-			},
-		}, []watcher.IObject{
-			kubeClient.CoreV1().Pods(""),
-			metaDataClient.MetaDataContextTypes(""), //Watch for our CRD
-		})
+// Inject the MetaDataProviderController into the subscriptions
+
+metadataProvider := pkg.MetaDataProviderController{ KubeClient:kubeconfig}
+/*
+This is a default template file.
+Add subscriptions and watchers to make it your own.
+*/
+err = runtime.EventBuffer(ctx, kubeClient,
+&subscription.Registry{
+	Subscriptions: []subscription.ISubscription{
+	subscriptions.MetaDataContextSubscriber{ MetaDataProvider: metadataProvider  },
+	subscriptions.PodSubscriber{ MetaDataProvider: metadataProvider },
+},
+}, []watcher.IObject{
+	kubeClient.CoreV1().Pods(""),
+	metaDataClient.MetaDataContextTypes(""), //Watch for our CRD
+})
+if err != nil {
+	klog.Error(err)
+}
 ```
 
 #### Testing

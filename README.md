@@ -4,6 +4,10 @@
 
 Built from [KubeOps](https://github.com/AlexsJones/KubeOps)
 
+
+![images](image/metadata3.png)
+
+
 ### Install the Custom Resource Definition on the cluster...
 
 `kubectl apply -f apis/crd.yml`

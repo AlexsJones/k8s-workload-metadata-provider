@@ -3,17 +3,25 @@ package pkg
 import (
 	"context"
 	metadatav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata.cloudskunkworks/v1"
-	"github.com/orcaman/concurrent-map"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/klog"
+	"sync"
 )
 
 type MetaDataProviderController struct {
 	KubeClient *kubernetes.Clientset
 	// TempMetaDataReference storage uses a concurrent map string // MetaDataContextType k/v
-	TempMetaDataReferenceStorage cmap.ConcurrentMap
+	TempMetaDataReferenceStorage *sync.Map
+}
+
+func NewMetaDataProviderController(kubeClient *kubernetes.Clientset) *MetaDataProviderController {
+
+	return &MetaDataProviderController{
+		KubeClient: kubeClient,
+		TempMetaDataReferenceStorage: new(sync.Map),
+	}
 }
 
 func (*MetaDataProviderController) OnPodEvent(event watch.EventType, pod *v1.Pod) {
@@ -23,28 +31,28 @@ func (*MetaDataProviderController) OnPodEvent(event watch.EventType, pod *v1.Pod
 func (m *MetaDataProviderController) OnMetaDataContextTypeEvent(event watch.Event,
 	context *metadatav1.MetaDataContextType) {
 
+	localObject := &context
+
 	if context.Name == "" {
 		klog.Errorf("Unable to retrieve name from incoming event")
 		return
 	}
 	switch event.Type {
 	case watch.Added:
-		m.TempMetaDataReferenceStorage.Set(context.Name,context)
+		if _, ok := m.TempMetaDataReferenceStorage.Load(context.Name); !ok {
+			m.TempMetaDataReferenceStorage.Store(context.Name,localObject)
+		}
 		break
 	case watch.Modified:
-		m.TempMetaDataReferenceStorage.Set(context.Name,context)
+			m.TempMetaDataReferenceStorage.Store(context.Name,localObject)
 		break
 	case watch.Deleted:
-		m.TempMetaDataReferenceStorage.Remove(context.Name)
+		m.TempMetaDataReferenceStorage.Delete(context.Name)
 		break
 	}
-	klog.Info("Referential storage has %d MetaDataContextType objects being tracked", m.TempMetaDataReferenceStorage.Count())
 }
 
 func (m *MetaDataProviderController) ControlLoop(cancelContext context.Context) {
-
-	m.TempMetaDataReferenceStorage = cmap.New()
-
 
 	for {
 		select {

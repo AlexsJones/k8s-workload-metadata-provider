@@ -9,7 +9,7 @@ import (
 )
 
 type PodSubscriber struct{
-	MetaDataProvider pkg.MetaDataProviderController
+	MetaDataProvider *pkg.MetaDataProviderController
 }
 
 func (PodSubscriber) WithElectedResource() interface{} {

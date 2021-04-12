@@ -103,8 +103,8 @@ func main() {
 
 
 	// Inject the MetaDataProviderController into the subscriptions
-	metadataProvider := pkg.MetaDataProviderController{ KubeClient: kubeClient}
-	go metadataProvider.ControlLoop(ctx)
+	metadataProvider := pkg.NewMetaDataProviderController(kubeClient)
+//	go metadataProvider.ControlLoop(ctx)
 	/*
 		This is a default template file.
 		Add subscriptions and watchers to make it your own.

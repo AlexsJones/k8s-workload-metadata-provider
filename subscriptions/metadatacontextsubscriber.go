@@ -9,7 +9,7 @@ import (
 )
 
 type MetaDataContextSubscriber struct{
-	MetaDataProvider pkg.MetaDataProviderController
+	MetaDataProvider *pkg.MetaDataProviderController
 }
 
 func (MetaDataContextSubscriber) WithElectedResource() interface{} {

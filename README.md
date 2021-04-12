@@ -37,3 +37,8 @@ I0411 16:17:08.780173   52519 main.go:84] Created new KubeConfig
 I0411 16:17:08.780207   52519 main.go:101] Starting event buffer...
 I0411 16:17:08.788598   52519 metadatacontextsubscriber.go:26] Found MetaDataContextType with message: Test
 ```
+
+
+We can see the CRD available here...
+
+![image](image/crd.png)

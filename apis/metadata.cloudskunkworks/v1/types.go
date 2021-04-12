@@ -20,7 +20,7 @@ type MetaDataContextType struct {
 
 // custom spec
 type MetaDataContextSpec struct {
-	Message string `json:"message,omitempty"`
+	DataMapping string `json:"datamapping,omitempty"`
 }
 
 // custom status

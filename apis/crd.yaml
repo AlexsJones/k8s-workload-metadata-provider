@@ -20,8 +20,11 @@ spec:
             spec:
               type: object
               properties:
-                message:
-                  type: string
+                datamapping:
+                  type: object
+                  additionalProperties:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
   # either Namespaced or Cluster
   scope: Cluster
   names:

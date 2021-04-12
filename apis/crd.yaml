@@ -25,6 +25,7 @@ spec:
                   additionalProperties:
                     type: object
                     x-kubernetes-preserve-unknown-fields: true
+
   # either Namespaced or Cluster
   scope: Cluster
   names:

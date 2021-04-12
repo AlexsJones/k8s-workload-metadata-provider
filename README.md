@@ -4,6 +4,9 @@
 
 Built from [KubeOps](https://github.com/AlexsJones/KubeOps)
 
+### Install the Custom Resource Definition on the cluster...
+
+`kubectl apply -f apis/crd.yml`
 
 | TODO                                                         |
 |--------------------------------------------------------------|
@@ -46,7 +49,7 @@ I0412 11:00:23.235668   56851 metadatacontextsubscriber.go:26] Found MetaDataCon
 I0412 11:00:23.235677   56851 metadatacontextsubscriber.go:29] Key slack: Value: map[critical-alerts:#critical medium-alert:#Medium-SRE server:XXXXXX]
 ```
 
-
 We can see the CRD available here...
 
 ![image](image/crd.png)
+

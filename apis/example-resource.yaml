@@ -8,3 +8,4 @@ spec:
        server: "XXXXXX"
        critical-alerts: "#critical"
        medium-alert: "#Medium-SRE"
+

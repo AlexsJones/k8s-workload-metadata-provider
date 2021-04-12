@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"context"
+	m1client "github.com/AlexsJones/k8s-workload-metadata-provider/apis/client/clientset/versioned/typed/metadata.cloudskunkworks/v1"
 	metadatav1 "github.com/AlexsJones/k8s-workload-metadata-provider/apis/metadata.cloudskunkworks/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -13,14 +14,16 @@ import (
 
 type MetaDataProviderController struct {
 	KubeClient *kubernetes.Clientset
+	MetaDataClient *m1client.MetadataV1Client
 	// TempMetaDataReference storage uses a concurrent map string // MetaDataContextType k/v
 	TempMetaDataReferenceStorage *sync.Map
 }
 
-func NewMetaDataProviderController(kubeClient *kubernetes.Clientset) *MetaDataProviderController {
+func NewMetaDataProviderController(kubeClient *kubernetes.Clientset,metaDataClient *m1client.MetadataV1Client) *MetaDataProviderController {
 
 	return &MetaDataProviderController{
 		KubeClient: kubeClient,
+		MetaDataClient: metaDataClient,
 		TempMetaDataReferenceStorage: new(sync.Map),
 	}
 }
@@ -28,6 +31,9 @@ func NewMetaDataProviderController(kubeClient *kubernetes.Clientset) *MetaDataPr
 func (m *MetaDataProviderController) OnPodEvent(event watch.Event, pod *v1.Pod) {
 
 	// Get the pods reference owner
+	if len(pod.GetOwnerReferences()) == 0 {
+		return
+	}
 	if pod.GetOwnerReferences()[0].Kind == "ReplicaSet" {
 		rs, err := m.KubeClient.AppsV1().ReplicaSets(pod.GetNamespace()).
 			Get(context.Background(),pod.GetOwnerReferences()[0].Name,metav1.GetOptions{})
@@ -35,7 +41,10 @@ func (m *MetaDataProviderController) OnPodEvent(event watch.Event, pod *v1.Pod) 
 			klog.Errorf(err.Error())
 			return
 		}
-		if rs.GetOwnerReferences()[0].Kind == "Deployment" {
+		if len(rs.GetOwnerReferences()) == 0 {
+			return
+		}
+		if rs.GetOwnerReferences()[0].Kind == "Deployment"  {
 			deployment, err := m.KubeClient.AppsV1().ReplicaSets(pod.GetNamespace()).
 				Get(context.Background(),pod.GetOwnerReferences()[0].Name,metav1.GetOptions{})
 			if err != nil {
@@ -43,10 +52,29 @@ func (m *MetaDataProviderController) OnPodEvent(event watch.Event, pod *v1.Pod) 
 				return
 			}
 			// Check for annotations
-			if deployment.Annotations["metaDataContextAware"] != "" {
-		 		klog.V(4).Infof("Deployment %s is metaDataContextAware aware",deployment.Name)
+			if deployment.Annotations["metaDataContext"] != "" {
+		 		klog.V(4).Infof("Deployment %s is metaDataContext aware",deployment.Name)
+
+		 		// Check whether the deployment is looking for an existing context
+		 		// We can do this initially through the local cache then the remote
+		 		if _, ok := m.TempMetaDataReferenceStorage.Load(deployment.Annotations["metaDataContext"]); ok {
+		 			// Found the local cache reference
+		 			// Check the active API
+					mActiveType, err := m.MetaDataClient.MetaDataContextTypes("").Get(context.Background(),deployment.Annotations["metaDataContext"],metav1.GetOptions{})
+					if err != nil {
+						klog.Error(err.Error())
+						return
+					}
+					// Do something with the CRD
+					klog.V(4).Infof("Deployment %s has requested %s MetaDataContextType ",deployment.Name, mActiveType.Name)
+
+		 		}else {
+					klog.Warningln("Local cache of MetaDataContextType not found")
+					return
+				}
+
 			}else {
-				klog.V(4).Infof("Deployment %s is not metaDataContextAware aware",deployment.Name)
+				klog.V(4).Infof("Deployment %s is not metaDataContext aware",deployment.Name)
 			}
 		}
 	}

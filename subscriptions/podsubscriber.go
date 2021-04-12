@@ -22,10 +22,11 @@ func (PodSubscriber) WithEventType() []watch.EventType {
 	return []watch.EventType {watch.Added}
 }
 
-func (PodSubscriber) OnEvent(msg subscription.Message) {
+func (p PodSubscriber) OnEvent(msg subscription.Message) {
 
 	pod := msg.Event.Object.(*v1.Pod)
 
 	klog.V(7).Infof("Pod %s",pod.Name)
 
+	p.MetaDataProvider.OnPodEvent(msg.Event,pod)
 }

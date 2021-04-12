@@ -29,7 +29,7 @@ func (m MetaDataContextSubscriber) OnEvent(msg subscription.Message) {
 	klog.V(7).Infof("MetaDataContextType %s",context.Name)
 
 	for k, v := range context.Spec.DataMapping {
-		klog.Infof("Key %s: Value: %v", k,v)
+		klog.V(7).Infof("Key %s: Value: %v", k,v)
 	}
 
 	m.MetaDataProvider.OnMetaDataContextTypeEvent(msg.Event, context)

@@ -20,7 +20,7 @@ type MetaDataContextType struct {
 
 // custom spec
 type MetaDataContextSpec struct {
-	DataMapping string `json:"datamapping,omitempty"`
+	DataMapping map[string]interface{} `json:"datamapping,omitempty"`
 }
 
 // custom status

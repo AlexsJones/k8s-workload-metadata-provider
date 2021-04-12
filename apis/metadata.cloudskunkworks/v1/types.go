@@ -9,8 +9,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 type MetaDataContextType struct {
 	metav1.TypeMeta `json:",inline"`
 	// +optional
-	metav1.ObjectMeta `json:"metadata.cloudskunkworks,omitempty"`
-
+	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +optional
 	Status MetaDataContextTypeStatus `json:"status,omitempty"`
 	// This is where you can define
@@ -18,9 +17,15 @@ type MetaDataContextType struct {
 	Spec MetaDataContextSpec `json:"spec,omitempty"`
 }
 
+
+type Values map[string]interface{}
+
+func (v *Values) DeepCopy() *Values {
+	return v.DeepCopy()
+}
 // custom spec
 type MetaDataContextSpec struct {
-	DataMapping map[string]interface{} `json:"datamapping,omitempty"`
+	DataMapping Values `json:"datamapping,omitempty"`
 }
 
 // custom status

@@ -22,6 +22,16 @@ Built from [KubeOps](https://github.com/AlexsJones/KubeOps)
 
 `kubectl apply -f apis/crd.yml`
 
+| TODO                                                         |
+|--------------------------------------------------------------|
+| Build process for CRD/Annotation                             |
+| Update pods through downward API from associated deployments |
+
+
+### Install the Custom Resource Definition on the cluster...
+
+`kubectl apply -f apis/crd.yml`
+
 ### How it works
 
 ```go

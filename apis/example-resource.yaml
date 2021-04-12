@@ -3,4 +3,9 @@ kind: MetaDataContextType
 metadata:
   name: mycontextexample
 spec:
-  message: "Test"
+   datamapping:
+     slack:
+       server: "XXXXXX"
+       critical-alerts: "#critical"
+       medium-alert: "#Medium-SRE"
+
